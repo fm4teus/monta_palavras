@@ -71,7 +71,7 @@ def get_word_score(word, letter_score):
 
 def get_word_dict_score(word_dict):
     """Recebe um dicionário e retorna seu atributo score"""
-    return word_dict['score']
+    return (word_dict['score'])*100 - len(word_dict['word'])
 
 def can_get_word_from_input(word_input, word_from_list):
     """
@@ -82,22 +82,27 @@ def can_get_word_from_input(word_input, word_from_list):
 
     word_input = list(word_input)
     word_from_list = list(word_from_list)
-    remaining_letters = word_input.copy()
     
-    for letter in word_input:
-        if letter in word_from_list:
-            word_from_list.remove(letter)
-            remaining_letters.remove(letter)
-        # print('input: ' + str(remaining_letters))
-        # print('from list: ' + str(word_from_list) + '\n')
+    counter = len(word_from_list)
     
-    if not word_from_list:
-        return True
-    else:
-        return False
+    for letter in word_from_list:
+        if letter in word_input:
+            word_input.remove(letter)
+            counter -= 1
+        if not counter:
+            return True
+    
+    return False
 
 def find_highest_value_word(word_input, word_list):
     for word_from_list in word_list:
         if can_get_word_from_input(word_input, word_from_list):
             return word_from_list
     return False
+
+def remaining_input_letters(response, user_input):
+    response = list(response)
+    user_input = list(user_input)
+    for letter in response:
+        user_input.remove(letter)
+    return user_input

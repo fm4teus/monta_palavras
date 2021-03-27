@@ -9,6 +9,8 @@ write_words(json_filename, words)
 
 words_dicts = []
 
+words.sort()
+
 for word in words:
     words_dicts.append({ 'word': word, 'score': get_word_score(word, letter_score) })
 
@@ -23,10 +25,16 @@ for words_dict in words_dicts:
 
 while True:
     word_input = input("\n\nInsira uma sequencia de caracteres: ")
-    if word_input == 'quit':
+    word_input = word_input.lower()
+    if word_input == '-1':
         break
     response = find_highest_value_word(word_input, word_list)
     if response:
-        print("Palavra de maior valor: " + response)
+        print("Palavra de maior valor: " + response.upper())
+        print("Pontos: " + str(get_word_score(response, letter_score)))
+        
+        remaining_input_letters = remaining_input_letters(response, word_input)
+        if remaining_input_letters:
+            print("Sobraram as letras: " + str(remaining_input_letters))
     else:
         print("Não foi possível encontrar nenhuma palavra!")
