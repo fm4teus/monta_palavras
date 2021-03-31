@@ -1,15 +1,30 @@
 import json
 import unicodedata
 
-letters_filename = 'letters.txt'
-words_filename = 'words.txt'
-json_filename = 'words_db.json'
-letters_json_filename = 'letters_db.json'
+letters_filename = 'files/letters.txt'
+words_filename = 'files/words.txt'
+words_json_filename = 'files/words_db.json'
+letters_json_filename = 'files/letters_db.json'
 
 def strip_accents(s):
     """Remove acentos de uma string"""
     return ''.join(c for c in unicodedata.normalize('NFD', s)
                   if unicodedata.category(c) != 'Mn')
+
+def write_words_json(words_filename, words_json_filename):
+    words = read_words(words_filename)
+    write_words(words_json_filename, words)
+
+def write_letter_json(letters_filename, letters_json_filename):
+    letter_score = read_words(letters_filename)
+    write_words(letters_json_filename, letter_score)
+
+def read_json(filename):
+    try:
+        with open(filename) as file_object:
+            return json.load(file_object)
+    except:
+        return False
 
 def read_letter_score(filename):
     """
@@ -53,25 +68,25 @@ def write_words(filename, words):
     with open(json_filename, 'w') as file_object:
         json.dump(words,file_object)
 
-def get_word_score(word, letter_score):
-    """
-    Recebe uma palavra e uma lista com os valores das letras
-    Para cada letra da palavra percorre a lista de dicionarios até encontrar
-    o valor daquela letra e incrementa esse valor.
-    A variável word_score é retornada contendo a pontuação daquela palavra.
-    """
-    list_word = list(word)
-    word_score = 0
-    for letter_word in list_word:
-        for score, letters in letter_score.items():
-            if letter_word in letters:
-                word_score += int(score)
-                break;
-    return word_score
+# def get_word_score(word, letter_score):
+#     """
+#     Recebe uma palavra e uma lista com os valores das letras
+#     Para cada letra da palavra percorre a lista de dicionarios até encontrar
+#     o valor daquela letra e incrementa esse valor.
+#     A variável word_score é retornada contendo a pontuação daquela palavra.
+#     """
+#     list_word = list(word)
+#     word_score = 0
+#     for letter_word in list_word:
+#         for score, letters in letter_score.items():
+#             if letter_word in letters:
+#                 word_score += int(score)
+#                 break;
+#     return word_score
 
 def get_word_dict_score(word_dict):
     """Recebe um dicionário e retorna seu atributo score"""
-    return (word_dict['score'])*100 - len(word_dict['word'])
+    return ( word_dict.get_score() )*100 - len( word_dict.get_word() )
 
 def can_get_word_from_input(word_input, word_from_list):
     """
@@ -95,6 +110,7 @@ def can_get_word_from_input(word_input, word_from_list):
     return False
 
 def find_highest_value_word(word_input, word_list):
+    word_input = word_input.lower()
     for word_from_list in word_list:
         if can_get_word_from_input(word_input, word_from_list):
             return word_from_list
