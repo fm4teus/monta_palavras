@@ -1,5 +1,6 @@
 import unittest
 from src.word_functions import *
+from src.read_write_files import *
 from src.word import Game_Word
 
 
