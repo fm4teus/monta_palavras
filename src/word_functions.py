@@ -1,8 +1,8 @@
 from src.word import Game_Word
 
-def get_word_dict_score(word_dict):
+def get_word_object_score(word_object):
     """Recebe um dicionário e retorna seu atributo score"""
-    return ( word_dict.get_score() )*100 - len( word_dict.get_word() )
+    return ( word_object.get_score() )*100 - len( word_object.get_word() )
 
 def can_get_word_from_input(word_input, word_from_list):
     """
@@ -10,7 +10,6 @@ def can_get_word_from_input(word_input, word_from_list):
     Retorna True se for possível formar essa palavra com os caracteres dados
     e False caso contrário
     """
-
     word_input = list(word_input)
     word_from_list = list(word_from_list)
     
@@ -67,5 +66,5 @@ def get_sorted_words_collection( words, letter_score ):
     words.sort()
     for word in words:
         words_collection.append( Game_Word(word, letter_score) )
-    words_collection.sort(key=get_word_dict_score, reverse=True)
+    words_collection.sort(key=get_word_object_score, reverse=True)
     return words_collection

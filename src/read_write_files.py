@@ -13,21 +13,24 @@ def strip_accents(s):
                   if unicodedata.category(c) != 'Mn')
 
 def write_words_json(words_filename, words_json_filename, letter_score):
+    """Lê uma lista de palavras, ordena elas por pontuação e salva em JSON"""
     words = read_words(words_filename)
     words_collection = get_sorted_words_collection( words, letter_score )
     sorted_word_list = get_sorted_word_list( words_collection )
     write_words(words_json_filename, sorted_word_list)
 
 def write_letter_json(letters_filename, letters_json_filename):
+    """Lê um arquivo de letras e pontuações e salva em JSON"""
     letter_score = read_letter_score(letters_filename)
     write_letter_score(letters_json_filename, letter_score)
 
 def read_json(filename):
+    """Lê um arquivo JSON e retorna seu conteúdo"""
     try:
         with open(filename) as file_object:
             return json.load(file_object)
     except:
-        print("arquivo não encontrado!")
+        print("Arquivo não encontrado, os dados serão calculados nessa execução e um arquivo JSON será gerado.")
         return False
 
 def read_letter_score(filename):
