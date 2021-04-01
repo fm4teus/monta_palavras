@@ -5,6 +5,11 @@
 # percorrida até que uma dessas palavras possa ser escrita com as letras digitadas
 # pelo usuário.
 
+### IMPORTANTE!
+# O pacote "unicodedata" precisa estar instalado para que o programa consiga lidar
+# com os caracteres especiais. Se o código for executado no Linux esse Pacote
+# provavelmente já está instalado.
+
 # ARQUIVOS DE ENTRADA
 # Tanto a lista de palavras quanto as pontuações de cada letra são lidas de
 # um arquivo .txt tornando assim fácil a alteração dos mesmos.
