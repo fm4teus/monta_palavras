@@ -13,15 +13,10 @@ class FindWordTestCase(unittest.TestCase):
             write_letter_json(letters_filename, letters_json_filename)
             letter_score = read_json(letters_json_filename)
 
-        words = read_json(words_json_filename)
-        if not words:
-            write_words_json(words_filename, words_json_filename)
-            words = read_json(words_json_filename)
-
-        words_collection = get_sorted_words_collection( words, letter_score )
-
-        self.sorted_word_list = get_sorted_word_list( words_collection )
-
+        self.sorted_word_list = read_json(words_json_filename)
+        if not self.sorted_word_list:
+            write_words_json(words_filename, words_json_filename, letter_score)
+            self.sorted_word_list = read_json(words_json_filename)
 
 
     def test_input_queijo(self):

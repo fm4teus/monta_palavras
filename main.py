@@ -9,14 +9,10 @@ if not letter_score:
     write_letter_json(letters_filename, letters_json_filename)
     letter_score = read_json(letters_json_filename)
 
-words = read_json(words_json_filename)
-if not words:
-    write_words_json(words_filename, words_json_filename)
-    words = read_json(words_json_filename)
-
-words_collection = get_sorted_words_collection( words, letter_score )
-
-sorted_word_list = get_sorted_word_list( words_collection )
+sorted_word_list = read_json(words_json_filename)
+if not sorted_word_list:
+    write_words_json(words_filename, words_json_filename, letter_score)
+    sorted_word_list = read_json(words_json_filename)
 
 while True:
     word_input = input("\n\nDigite as letras disponíveis nesta jogada: ")

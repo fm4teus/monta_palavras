@@ -1,5 +1,6 @@
 import json
 import unicodedata
+from src.word_functions import *
 
 letters_filename = 'files/letters.txt'
 words_filename = 'files/words.txt'
@@ -11,9 +12,11 @@ def strip_accents(s):
     return ''.join(c for c in unicodedata.normalize('NFD', s)
                   if unicodedata.category(c) != 'Mn')
 
-def write_words_json(words_filename, words_json_filename):
+def write_words_json(words_filename, words_json_filename, letter_score):
     words = read_words(words_filename)
-    write_words(words_json_filename, words)
+    words_collection = get_sorted_words_collection( words, letter_score )
+    sorted_word_list = get_sorted_word_list( words_collection )
+    write_words(words_json_filename, sorted_word_list)
 
 def write_letter_json(letters_filename, letters_json_filename):
     letter_score = read_letter_score(letters_filename)
